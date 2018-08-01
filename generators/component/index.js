@@ -5,8 +5,7 @@ const yosay = require('yosay');
 const path = require('path');
 
 const prompts = require('../../constants/prompts');
-const generatorConfigKey = require('../../constants/generatorConfigKey');
-const configFileName = require('../../constants/configFileName');
+const getGeneratorConfig = require('../../helpers/getGeneratorConfig');
 const defaultConfigValues = require('../../constants/defaultConfigValues');
 const containerPostfix = require('../../constants/containerPostfix');
 
@@ -18,8 +17,7 @@ module.exports = class extends Generator {
     }
 
     writing() {
-        const packageJson = this._getPackageJson();
-        const generatorConfig = this._extractGeneratorConfigJson(packageJson);
+        const generatorConfig = getGeneratorConfig(this);
 
         this._writeComponent(generatorConfig);
         if (this.props.containerIsNeeded) {
@@ -78,16 +76,6 @@ module.exports = class extends Generator {
             this.destinationPath(destinationPath),
             Object.assign({}, this.props, { importComponentsPath }),
         );
-    }
-
-    _getPackageJson() {
-        return this.fs.exists(configFileName)
-            ? this.fs.readJSON(configFileName)
-            : null;
-    }
-
-    _extractGeneratorConfigJson(json) {
-        return json && json[generatorConfigKey];
     }
 
     _getConfigValueAndLog(generatorConfig, key, caption) {
