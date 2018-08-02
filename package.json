@@ -43,6 +43,8 @@
   "react-redux-generator": {
     "componentsPath": "ClientApp/components",
     "containersPath": "ClientApp/containers",
-    "importComponentsPath": "Pages"
+    "importComponentsPath": "Pages",
+    "actionTypesPath": "ClientApp/actions/actionTypes",
+    "actionCreatorsPath": "ClientApp/actions/actionCreators"
   }
 }

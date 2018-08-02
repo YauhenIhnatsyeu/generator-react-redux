@@ -2,7 +2,7 @@ const path = require('path');
 
 const getConfigValueAndLog = require('../helpers/getConfigValueAndLog');
 const logWriting = require('../helpers/logWriting');
-const containerPostfix = require('../constants/containerPostfix');
+const postfixes = require('../constants/postfixes');
 
 module.exports = function (context, config) {
     if (!context) {
@@ -27,7 +27,7 @@ module.exports = function (context, config) {
 
     const destinationPath = path.resolve(
         containersPath,
-        `${props.componentName}${containerPostfix}.js`,
+        `${props.componentName}${postfixes.containerPostfix}.js`,
     );
 
     logWriting(context, 'container', destinationPath);
