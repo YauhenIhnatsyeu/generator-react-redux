@@ -12,28 +12,54 @@ function extractActionTypesFromString(str) {
     return splitAndTrim(str, ',').map(at => at.toUpperCase());
 }
 
-function addImportToIndexJs(context, actionTypeName, actionTypesPath) {
+function addImportAndExportToIndexJs(context, actionTypeName, actionTypesPath) {
     const filePath = path.resolve(actionTypesPath, 'index.js');
     const file = context.fs.read(filePath);
+
+    let newFile = addImportToIndexJs(file, context, actionTypeName);
+    newFile = addExportToIndexJs(newFile, context, actionTypeName);
+
+    context.fs.write(filePath, newFile);
+}
+
+function addImportToIndexJs(file, context, actionTypeName) {
     const indicesOfSemiColumns = indicesOf(file, ';');
     const fullActionTypeName = actionTypeName + postfixes.actionTypesPostfix;
     const importString = `import ${fullActionTypeName} from "./${fullActionTypeName}";`;
-    let newFile = file;
 
     if (indicesOfSemiColumns.length < 1) {
         context.log('Cannot add import of action type to index.js');
     } else if (indicesOfSemiColumns.length === 1) {
-        newFile = importString + newFile;
+        newFile = importString + file;
     } else {
         const penultimateIndexOfSemiColumn = indicesOfSemiColumns[indicesOfSemiColumns.length - 2];
         newFile = insertIntoString(
-            newFile,
+            file,
             penultimateIndexOfSemiColumn + 1,
             `\n${importString}`,
         );
     }
 
-    context.fs.write(filePath, newFile);
+    return newFile;
+}
+
+function addExportToIndexJs(file, context, actionTypeName) {
+    const indicesOfCommas = indicesOf(file, ',');
+    const fullActionTypeName = actionTypeName + postfixes.actionTypesPostfix;
+    const exportString = `${fullActionTypeName},`;
+
+    if (indicesOfCommas.length < 1) {
+        context.log('Cannot add export of action type to index.js');
+    } else {
+        const lastIndexOfСommas = indicesOfCommas[indicesOfCommas.length - 1];
+        newFile = insertIntoString(
+            file,
+            lastIndexOfСommas + 1,
+            `\n\t${exportString}`,
+        );
+    }
+
+    return newFile;
 }
 
 module.exports = function (context, config) {
@@ -65,5 +91,5 @@ module.exports = function (context, config) {
         { actionTypes },
     );
 
-    addImportToIndexJs(context, props.actionTypesName, actionTypesPath);
+    addImportAndExportToIndexJs(context, props.actionTypesName, actionTypesPath);
 }
