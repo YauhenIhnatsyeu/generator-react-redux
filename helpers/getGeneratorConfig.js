@@ -10,5 +10,6 @@ module.exports = function (context) {
         const fileJson = context.fs.readJSON(configFileName);
         return fileJson && fileJson[generatorConfigKey];
     }
+
     return null;
 }
