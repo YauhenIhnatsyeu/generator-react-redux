@@ -1,16 +1,18 @@
-module.exports = [
+const componentNamePrompt = {
+    type: 'input',
+    name: 'componentName',
+    message: 'What\'s the name of your component?',
+    default: 'App',
+};
+
+const componentPrompts = [
     {
         type: 'input',
         name: 'completedComponentPath',
         message: 'Complete component path (relative to default)',
         default: '',
     },
-    {
-        type: 'input',
-        name: 'componentName',
-        message: 'What\'s the name of your component?',
-        default: 'App',
-    },
+    componentNamePrompt,
     {
         type: 'confirm',
         name: 'stateIsNeeded',
@@ -30,3 +32,12 @@ module.exports = [
         default: false,
     },
 ];
+
+const containerPrompts = [
+    componentNamePrompt,
+];
+
+module.exports = {
+    componentPrompts,
+    containerPrompts,
+};

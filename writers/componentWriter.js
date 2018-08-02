@@ -8,7 +8,7 @@ module.exports = function (context, config) {
         return null;
     }
 
-    const { props, fs, templatePath } = context;
+    const { props, fs } = context;
 
     const componentsPath = getConfigValueAndLog(
         context,
@@ -26,7 +26,7 @@ module.exports = function (context, config) {
     logWriting(context, 'component', destinationPath);
 
     fs.copyTpl(
-        templatePath('component'),
+        context.templatePath('component'),
         context.destinationPath(destinationPath),
         props,
     );

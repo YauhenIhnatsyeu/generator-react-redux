@@ -9,7 +9,7 @@ const writeContainer = require('../../writers/containerWriter');
 
 module.exports = class extends Generator {
     prompting() {
-		return this.prompt(prompts).then(props => {
+		return this.prompt(prompts.componentPrompts).then(props => {
             this.props = props;
         });
     }

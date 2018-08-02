@@ -9,7 +9,7 @@ module.exports = function (context, config) {
         return null;
     }
 
-    const { props, fs, templatePath } = context;
+    const { props, fs } = context;
 
     const containersPath = getConfigValueAndLog(
         context,
@@ -33,7 +33,7 @@ module.exports = function (context, config) {
     logWriting(context, 'container', destinationPath);
 
     fs.copyTpl(
-        templatePath('container.js'),
+        context.templatePath('container.js'),
         context.destinationPath(destinationPath),
         Object.assign({}, props, { importComponentsPath }),
     );
