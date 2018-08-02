@@ -9,6 +9,8 @@ const getGeneratorConfig = require('../../helpers/getGeneratorConfig');
 const defaultConfigValues = require('../../constants/defaultConfigValues');
 const containerPostfix = require('../../constants/containerPostfix');
 
+const writeComponent = require('../../writers/componentWriter');
+
 module.exports = class extends Generator {
     prompting() {
 		return this.prompt(prompts).then(props => {
@@ -19,35 +21,9 @@ module.exports = class extends Generator {
     writing() {
         const generatorConfig = getGeneratorConfig(this);
 
-        this._writeComponent(generatorConfig);
+        writeComponent(this, generatorConfig);
         if (this.props.containerIsNeeded) {
             this._writeContainer(generatorConfig);
-        }
-    }
-
-    _writeComponent(generatorConfig) {
-        const componentsPath = this._getConfigValueAndLog(
-            generatorConfig,
-            'componentsPath',
-            'Components path',
-        );
-
-        const destinationPath = path.resolve(
-            componentsPath,
-            this.props.completedComponentPath,
-            this.props.componentName,
-        );
-
-        this.log(`Writing component to ${chalk.green(destinationPath)}...`);
-
-        this.fs.copyTpl(
-            this.templatePath('component'),
-            this.destinationPath(destinationPath),
-            this.props,
-        );
-
-        if (this.props.indexCssIsNeeded) {
-            this.fs.write(path.resolve(destinationPath, 'index.css'), '');
         }
     }
 
