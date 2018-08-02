@@ -9,6 +9,8 @@ module.exports = function (context, config) {
         return null;
     }
 
+    const { props, fs, templatePath } = context;
+
     const containersPath = getConfigValueAndLog(
         context,
         config,
@@ -25,14 +27,14 @@ module.exports = function (context, config) {
 
     const destinationPath = path.resolve(
         containersPath,
-        `${context.props.componentName}${containerPostfix}.js`,
+        `${props.componentName}${containerPostfix}.js`,
     );
 
     logWriting(context, 'container', destinationPath);
 
-    context.fs.copyTpl(
-        context.templatePath('container.js'),
+    fs.copyTpl(
+        templatePath('container.js'),
         context.destinationPath(destinationPath),
-        Object.assign({}, context.props, { importComponentsPath }),
+        Object.assign({}, props, { importComponentsPath }),
     );
 }

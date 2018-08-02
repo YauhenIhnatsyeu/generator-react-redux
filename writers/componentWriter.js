@@ -8,6 +8,8 @@ module.exports = function (context, config) {
         return null;
     }
 
+    const { props, fs, templatePath } = context;
+
     const componentsPath = getConfigValueAndLog(
         context,
         config,
@@ -17,19 +19,19 @@ module.exports = function (context, config) {
 
     const destinationPath = path.resolve(
         componentsPath,
-        context.props.completedComponentPath,
-        context.props.componentName,
+        props.completedComponentPath,
+        props.componentName,
     );
 
     logWriting(context, 'component', destinationPath);
 
-    context.fs.copyTpl(
-        context.templatePath('component'),
+    fs.copyTpl(
+        templatePath('component'),
         context.destinationPath(destinationPath),
-        context.props,
+        props,
     );
 
-    if (context.props.indexCssIsNeeded) {
-        context.fs.write(path.resolve(destinationPath, 'index.css'), '');
+    if (props.indexCssIsNeeded) {
+        fs.write(path.resolve(destinationPath, 'index.css'), '');
     }
 }
