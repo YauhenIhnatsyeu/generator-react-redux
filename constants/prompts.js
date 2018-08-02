@@ -39,24 +39,16 @@ const containerPrompts = [
 
 const actionTypesPrompts = [
     {
-        type: 'confirm',
-        name: 'needNewActionTypesFile',
-        message: 'Do you need a new action types file?',
-        default: true,
-    },
-    {
         type: 'input',
         name: 'actionTypesName',
         message: 'What\'s your action types name',
         default: 'app',
-        when: response => response.needNewActionTypesFile,
     },
     {
         type: 'input',
         name: 'actionTypes',
         message: 'List all action types',
         default: '',
-        when: response => response.needNewActionTypesFile,
     },
 ];
 
