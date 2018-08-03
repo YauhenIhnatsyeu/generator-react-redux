@@ -8,6 +8,11 @@ const getConfigValueAndLog = require('../helpers/getConfigValueAndLog');
 const logWriting = require('../helpers/logWriting');
 const postfixes = require('../constants/postfixes');
 
+const getImportInsertIndex = require('../insertIndexFinders/actionTypesIndexJsImport');
+const getImportInsertString = require('../insertStrings/actionTypesIndexJsImport');
+const getExportInsertIndex = require('../insertIndexFinders/actionTypesIndexJsExport');
+const getExportInsertString = require('../insertStrings/actionTypesIndexJsExport');
+
 function extractActionTypesFromString(str) {
     return splitAndTrim(str, ',').map(at => at.toUpperCase());
 }
@@ -23,43 +28,33 @@ function addImportAndExportToIndexJs(context, actionTypeName, actionTypesPath) {
 }
 
 function addImportToIndexJs(file, context, actionTypeName) {
-    const indicesOfSemiColumns = indicesOf(file, ';');
+    const importInsertIndex = getImportInsertIndex(file);
     const fullActionTypeName = actionTypeName + postfixes.actionTypesPostfix;
-    const importString = `import ${fullActionTypeName} from "./${fullActionTypeName}";`;
-
-    if (indicesOfSemiColumns.length < 1) {
+    const importString = getImportInsertString(fullActionTypeName);
+    
+    if (importInsertIndex === null) {
         context.log('Cannot add import of action type to index.js');
-    } else if (indicesOfSemiColumns.length === 1) {
-        newFile = importString + file;
+    } else if (importInsertIndex === 0) {
+        file = importString + file;
     } else {
-        const penultimateIndexOfSemiColumn = indicesOfSemiColumns[indicesOfSemiColumns.length - 2];
-        newFile = insertIntoString(
-            file,
-            penultimateIndexOfSemiColumn + 1,
-            `\n${importString}`,
-        );
+        file = insertIntoString(file, importInsertIndex, `\n${importString}`);
     }
 
-    return newFile;
+    return file;
 }
 
 function addExportToIndexJs(file, context, actionTypeName) {
-    const indicesOfCommas = indicesOf(file, ',');
+    const exportInsertIndex = getExportInsertIndex(file);
     const fullActionTypeName = actionTypeName + postfixes.actionTypesPostfix;
-    const exportString = `${fullActionTypeName},`;
+    const exportString = getExportInsertString(fullActionTypeName);
 
-    if (indicesOfCommas.length < 1) {
+    if (exportInsertIndex === null) {
         context.log('Cannot add export of action type to index.js');
     } else {
-        const lastIndexOfСommas = indicesOfCommas[indicesOfCommas.length - 1];
-        newFile = insertIntoString(
-            file,
-            lastIndexOfСommas + 1,
-            `\n\t${exportString}`,
-        );
+        file = insertIntoString(file, exportInsertIndex, `\n\t${exportString}`);
     }
 
-    return newFile;
+    return file;
 }
 
 module.exports = function (context, config) {
