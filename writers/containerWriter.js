@@ -1,32 +1,17 @@
 const path = require('path');
 
-const getConfigValueAndLog = require('../helpers/getConfigValueAndLog');
 const logWriting = require('../helpers/logWriting');
 const postfixes = require('../constants/postfixes');
 
-module.exports = function (context, config) {
+module.exports = function (context, configValues) {
     if (!context) {
         return null;
     }
 
     const { props, fs } = context;
 
-    const containersPath = getConfigValueAndLog(
-        context,
-        config,
-        'containersPath',
-        'Containers path',
-    );
-
-    const importComponentsPath = getConfigValueAndLog(
-        context,
-        config,
-        'importComponentsPath',
-        'Import components path',
-    );
-
     const destinationPath = path.resolve(
-        containersPath,
+        configValues.containersPath,
         `${props.componentName}${postfixes.containerPostfix}.js`,
     );
 
@@ -35,6 +20,10 @@ module.exports = function (context, config) {
     fs.copyTpl(
         context.templatePath('container.js'),
         context.destinationPath(destinationPath),
-        Object.assign({}, props, { importComponentsPath }),
+        Object.assign(
+            {},
+            props,
+            { importComponentsPath: configValues.importComponentsPath },
+        ),
     );
 }

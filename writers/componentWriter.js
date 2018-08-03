@@ -1,24 +1,16 @@
 const path = require('path');
 
-const getConfigValueAndLog = require('../helpers/getConfigValueAndLog');
 const logWriting = require('../helpers/logWriting');
 
-module.exports = function (context, config) {
+module.exports = function (context, configValues) {
     if (!context) {
         return null;
     }
 
     const { props, fs } = context;
 
-    const componentsPath = getConfigValueAndLog(
-        context,
-        config,
-        'componentsPath',
-        'Components path',
-    );
-
     const destinationPath = path.resolve(
-        componentsPath,
+        configValues.componentsPath,
         props.completedComponentPath,
         props.componentName,
     );
