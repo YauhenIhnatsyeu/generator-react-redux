@@ -4,6 +4,8 @@ const insertIntoString = require('../utils/insertIntoString');
 
 const postfixes = require('../constants/postfixes');
 
+const logWriting = require('../helpers/logWriting');
+
 const getImportInsertIndex = require('../insertIndexFinders/actionTypesIndexJsImport');
 const getImportInsertString = require('../insertStrings/actionTypesIndexJsImport');
 const getExportInsertIndex = require('../insertIndexFinders/actionTypesIndexJsExport');
@@ -40,11 +42,13 @@ function addExportToIndexJs(file, context, actionTypeName) {
 }
 
 module.exports = function (context, actionTypeName, configValues) {
-    const filePath = path.resolve(configValues.actionTypesPath, 'index.js');
-    const file = context.fs.read(filePath);
+    const destinationPath = path.resolve(configValues.actionTypesPath, 'index.js');
+    const file = context.fs.read(destinationPath);
+
+    logWriting(context, 'import and export', destinationPath);
 
     let newFile = addImportToIndexJs(file, context, actionTypeName);
     newFile = addExportToIndexJs(newFile, context, actionTypeName);
 
-    context.fs.write(filePath, newFile);
+    context.fs.write(destinationPath, newFile);
 }
