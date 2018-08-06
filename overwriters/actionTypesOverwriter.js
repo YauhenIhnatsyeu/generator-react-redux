@@ -42,7 +42,8 @@ function addExportToIndexJs(file, context, actionName) {
     return file;
 }
 
-module.exports = function (context, actionName, configValues) {
+module.exports = function (context, configValues) {
+    const { actionName } = context.props;
     const destinationPath = path.resolve(configValues.actionTypesPath, 'index.js');
     const file = context.fs.read(destinationPath);
 

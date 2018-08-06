@@ -26,7 +26,7 @@ module.exports = class extends Generator {
         const actionTypesConfigValues = getActionTypesConfigValues(this, generatorConfig); 
 
         writeActionTypes(this, actionTypesConfigValues);
-        overwriteActionTypes(this, this.props.actionName, actionTypesConfigValues);
+        overwriteActionTypes(this, actionTypesConfigValues);
         
         if (this.props.actionCreatorsAreNeeded) {
             const actionCreatorsConfigValues = getActionCreatorsConfigValues(this, generatorConfig); 
