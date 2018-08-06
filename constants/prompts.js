@@ -1,26 +1,4 @@
-const actionCreatorsPromptsWithoutNameAsking = [
-    {
-        type: 'input',
-        name: 'actionCreators',
-        message: 'List all action creators respectively to action types',
-        default: '',
-    },
-];
-
-const actionCreatorsPromptsWithNameAsking = [
-    actionNamePrompt,
-    actionCreatorsPromptsWithoutNameAsking,
-];
-
-const actionTypesPrompts = [
-    actionNamePrompt,
-    {
-        type: 'input',
-        name: 'actionTypes',
-        message: 'List all action types',
-        default: '',
-    },
-];
+const listPromptFilter = require('../promptsFilters/listPromptFilter');
 
 const componentNamePrompt = {
     type: 'input',
@@ -42,6 +20,32 @@ const actionNamePrompt = {
     message: 'What\'s your action name',
     default: 'app',
 };
+
+const actionCreatorsPromptsWithoutNameAsking = [
+    {
+        type: 'input',
+        name: 'actionCreators',
+        message: 'List all action creators respectively to action types',
+        default: '',
+        filter: listPromptFilter,
+    },
+];
+
+const actionCreatorsPromptsWithNameAsking = [
+    actionNamePrompt,
+    actionCreatorsPromptsWithoutNameAsking,
+];
+
+const actionTypesPrompts = [
+    actionNamePrompt,
+    {
+        type: 'input',
+        name: 'actionTypes',
+        message: 'List all action types',
+        default: '',
+        filter: listPromptFilter,
+    },
+];
 
 const containerPrompts = [
     componentNamePrompt,
