@@ -30,7 +30,7 @@ module.exports = class extends Generator {
             const actionTypesConfigValues = getActionTypesConfigValues(this, generatorConfig); 
 
             writeActionTypes(this, actionTypesConfigValues);
-            overwriteActionTypes(this, this.props.actionTypesName, actionTypesConfigValues);
+            overwriteActionTypes(this, this.props.actionName, actionTypesConfigValues);
         }
     }
 };

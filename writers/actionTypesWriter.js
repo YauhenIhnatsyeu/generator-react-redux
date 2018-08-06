@@ -18,7 +18,7 @@ module.exports = function (context, configValues) {
 
     const destinationPath = path.resolve(
         configValues.actionTypesPath,
-        `${props.actionTypesName}${postfixes.actionTypesPostfix}.js`,
+        `${props.actionName}${postfixes.actionTypesPostfix}.js`,
     );
 
     logWriting(context, 'action types', destinationPath);

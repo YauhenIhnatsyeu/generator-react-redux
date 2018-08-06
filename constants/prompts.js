@@ -1,10 +1,19 @@
-const actionTypesPrompts = [
+const actionCreatorsPromptsWithoutNameAsking = [
     {
         type: 'input',
-        name: 'actionTypesName',
-        message: 'What\'s your action types name',
-        default: 'app',
+        name: 'actionCreators',
+        message: 'List all action creators respectively to action types',
+        default: '',
     },
+];
+
+const actionCreatorsPromptsWithNameAsking = [
+    actionNamePrompt,
+    actionCreatorsPromptsWithoutNameAsking,
+];
+
+const actionTypesPrompts = [
+    actionNamePrompt,
     {
         type: 'input',
         name: 'actionTypes',
@@ -25,6 +34,13 @@ const actionTypesAreNeededPrompt = {
     name: 'actionTypesAreNeeded',
     message: 'Do you need action types?',
     default: false,
+};
+
+const actionNamePrompt = {
+    type: 'input',
+    name: 'actionName',
+    message: 'What\'s your action name',
+    default: 'app',
 };
 
 const containerPrompts = [
@@ -65,4 +81,6 @@ module.exports = {
     componentPrompts,
     containerPrompts,
     actionTypesPrompts,
+    actionCreatorsPromptsWithNameAsking,
+    actionCreatorsPromptsWithoutNameAsking,
 };
