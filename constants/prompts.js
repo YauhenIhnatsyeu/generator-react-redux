@@ -33,7 +33,7 @@ const actionCreatorsPromptsWithoutNameAsking = [
 
 const actionCreatorsPromptsWithNameAsking = [
     actionNamePrompt,
-    actionCreatorsPromptsWithoutNameAsking,
+    ...actionCreatorsPromptsWithoutNameAsking,
 ];
 
 const actionTypesPrompts = [

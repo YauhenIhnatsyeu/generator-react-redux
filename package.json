@@ -45,6 +45,7 @@
     "containersPath": "ClientApp/containers",
     "importComponentsPath": "Pages",
     "actionTypesPath": "ClientApp/actions/actionTypes",
-    "actionCreatorsPath": "ClientApp/actions/actionCreators"
+    "actionCreatorsPath": "ClientApp/actions/actionCreators",
+    "importActionTypesPath": "ActionTypes"
   }
 }
