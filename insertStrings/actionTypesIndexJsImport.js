@@ -1,3 +1,3 @@
-module.exports = function(fullActionTypeName) {
-    return `import ${fullActionTypeName} from "./${fullActionTypeName}";`
+module.exports = function(actionTypeName) {
+    return `\nimport ${actionTypeName} from "./${actionTypeName}";`
 }
