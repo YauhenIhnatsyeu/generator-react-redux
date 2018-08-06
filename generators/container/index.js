@@ -1,22 +1,34 @@
 'use strict';
 const Generator = require('yeoman-generator');
 
-const { containerPrompts, actionTypesPrompts } = require('../../constants/prompts');
+const {
+    containerPrompts,
+    actionTypesPrompts,
+    actionCreatorsPromptsWithoutNameAsking,
+} = require('../../constants/prompts');
 const getGeneratorConfig = require('../../helpers/getGeneratorConfig');
 const getContainerConfigValues = require('../../configValuesExtractors/containerConfigValuesExtractor');
 const getActionTypesConfigValues = require('../../configValuesExtractors/actionTypesConfigValuesExtractor');
+const getActionCreatorsConfigValues = require('../../configValuesExtractors/actionCreatorsConfigValuesExtractor');
 
 const writeContainer = require('../../writers/containerWriter');
 const writeActionTypes = require('../../writers/actionTypesWriter');
 const overwriteActionTypes = require('../../overwriters/actionTypesOverwriter');
+const writeActionCreators = require('../../writers/actionCreatorsWriter');
 
 module.exports = class extends Generator {
     async prompting() {
         const containerAnswers = await this.prompt(containerPrompts);
         this.props = { ...this.props, ...containerAnswers };
+        
         if (this.props.actionTypesAreNeeded) {
             const actionTypesAnswers = await this.prompt(actionTypesPrompts);
             this.props = { ...this.props, ...actionTypesAnswers };
+        }
+        
+        if (this.props.actionCreatorsAreNeeded) {
+            const actionCreatorsAnswers = await this.prompt(actionCreatorsPromptsWithoutNameAsking);
+            this.props = { ...this.props, ...actionCreatorsAnswers };
         }
     }
 
@@ -31,6 +43,13 @@ module.exports = class extends Generator {
 
             writeActionTypes(this, actionTypesConfigValues);
             overwriteActionTypes(this, this.props.actionName, actionTypesConfigValues);
+        }
+        
+        if (this.props.actionCreatorsAreNeeded) {
+            const actionCreatorsConfigValues = getActionCreatorsConfigValues(this, generatorConfig); 
+
+            writeContainer(this, containerConfigValues);
+            writeActionCreators(this, actionCreatorsConfigValues);
         }
     }
 };

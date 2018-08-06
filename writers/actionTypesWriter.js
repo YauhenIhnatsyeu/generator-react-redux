@@ -20,6 +20,6 @@ module.exports = function (context, configValues) {
     fs.copyTpl(
         context.templatePath('actionTypes.js'),
         context.destinationPath(destinationPath),
-        { actionTypes: props.actionTypes.map(str => str.toUpperCase()) },
+        { actionTypes: props.actionTypes },
     );
 }

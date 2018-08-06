@@ -23,7 +23,10 @@ module.exports = function (context, configValues) {
         Object.assign(
             {},
             props,
-            { importComponentsPath: configValues.importComponentsPath },
+            {
+                importComponentsPath: configValues.importComponentsPath,
+                importActionCreatorsPath: configValues.importActionCreatorsPath,
+            },
         ),
     );
 }

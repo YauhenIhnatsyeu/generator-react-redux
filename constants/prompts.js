@@ -1,4 +1,5 @@
 const listPromptFilter = require('../promptsFilters/listPromptFilter');
+const actionCreatorsPromptFilter = require('../promptsFilters/actionCreatorsPromptFilter');
 
 const componentNamePrompt = {
     type: 'input',
@@ -11,6 +12,13 @@ const actionTypesAreNeededPrompt = {
     type: 'confirm',
     name: 'actionTypesAreNeeded',
     message: 'Do you need action types?',
+    default: false,
+};
+
+const actionCreatorsAreNeededPrompt = {
+    type: 'confirm',
+    name: 'actionCreatorsAreNeeded',
+    message: 'Do you need action creators?',
     default: false,
 };
 
@@ -43,8 +51,9 @@ const actionTypesPrompts = [
         name: 'actionTypes',
         message: 'List all action types',
         default: '',
-        filter: listPromptFilter,
+        filter: actionCreatorsPromptFilter,
     },
+    actionCreatorsAreNeededPrompt,
 ];
 
 const containerPrompts = [

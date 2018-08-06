@@ -14,5 +14,11 @@ module.exports = function name(context, config) {
             'importComponentsPath',
             'Import components path',
         ),
+        importActionCreatorsPath: getConfigValueAndLog(
+            context,
+            config,
+            'importActionCreatorsPath',
+            'Import action creators path',
+        ),
     }
 }
