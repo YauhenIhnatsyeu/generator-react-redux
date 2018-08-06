@@ -1,9 +1,36 @@
+const actionTypesPrompts = [
+    {
+        type: 'input',
+        name: 'actionTypesName',
+        message: 'What\'s your action types name',
+        default: 'app',
+    },
+    {
+        type: 'input',
+        name: 'actionTypes',
+        message: 'List all action types',
+        default: '',
+    },
+];
+
 const componentNamePrompt = {
     type: 'input',
     name: 'componentName',
     message: 'What\'s the name of your component?',
     default: 'App',
 };
+
+const actionTypesAreNeededPrompt = {
+    type: 'confirm',
+    name: 'actionTypesAreNeeded',
+    message: 'Do you need action types?',
+    default: false,
+};
+
+const containerPrompts = [
+    componentNamePrompt,
+    actionTypesAreNeededPrompt,
+];
 
 const componentPrompts = [
     {
@@ -31,25 +58,7 @@ const componentPrompts = [
         message: 'Do you need a container?',
         default: false,
     },
-];
-
-const containerPrompts = [
-    componentNamePrompt,
-];
-
-const actionTypesPrompts = [
-    {
-        type: 'input',
-        name: 'actionTypesName',
-        message: 'What\'s your action types name',
-        default: 'app',
-    },
-    {
-        type: 'input',
-        name: 'actionTypes',
-        message: 'List all action types',
-        default: '',
-    },
+    actionTypesAreNeededPrompt,
 ];
 
 module.exports = {
