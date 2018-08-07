@@ -3,7 +3,10 @@ const Generator = require('yeoman-generator');
 
 const {
     containerPrompts,
+    actionTypesAreNeededPrompt,
     actionTypesPrompts,
+    actionCreatorsAreNeededPrompt,
+    actionCreatorsPromptsWithNameAsking,
     actionCreatorsPromptsWithoutNameAsking,
 } = require('../../constants/prompts');
 const getGeneratorConfig = require('../../helpers/getGeneratorConfig');
@@ -22,14 +25,20 @@ module.exports = class extends Generator {
         const containerAnswers = await this.prompt(containerPrompts);
         this.props = { ...this.props, ...containerAnswers };
         
-        if (this.props.actionTypesAreNeeded) {
+        const { actionTypesAreNeeded } = await this.prompt(actionTypesAreNeededPrompt);
+
+        if (actionTypesAreNeeded) {
             const actionTypesAnswers = await this.prompt(actionTypesPrompts);
-            this.props = { ...this.props, ...actionTypesAnswers };
+            this.props = { ...this.props, actionTypesAreNeeded, ...actionTypesAnswers };
         }
+
+        const { actionCreatorsAreNeeded } = await this.prompt(actionCreatorsAreNeededPrompt);
         
-        if (this.props.actionCreatorsAreNeeded) {
-            const actionCreatorsAnswers = await this.prompt(actionCreatorsPromptsWithoutNameAsking);
-            this.props = { ...this.props, ...actionCreatorsAnswers };
+        if (actionCreatorsAreNeeded) {
+            const actionCreatorsAnswers = await this.prompt(actionTypesAreNeeded
+                ? actionCreatorsPromptsWithoutNameAsking
+                : actionCreatorsPromptsWithNameAsking);
+            this.props = { ...this.props, actionCreatorsAreNeeded, ...actionCreatorsAnswers };
         }
     }
 

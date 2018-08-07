@@ -1,7 +1,11 @@
 'use strict';
 const Generator = require('yeoman-generator');
 
-const { actionTypesPrompts, actionCreatorsPromptsWithoutNameAsking } = require('../../constants/prompts');
+const {
+    actionTypesPrompts,
+    actionCreatorsAreNeededPrompt,
+    actionCreatorsPromptsWithoutNameAsking,
+} = require('../../constants/prompts');
 const getGeneratorConfig = require('../../helpers/getGeneratorConfig');
 const getActionTypesConfigValues = require('../../configValuesExtractors/actionTypesConfigValuesExtractor');
 const getActionCreatorsConfigValues = require('../../configValuesExtractors/actionCreatorsConfigValuesExtractor');
@@ -16,9 +20,11 @@ module.exports = class extends Generator {
         const actionTypesAnswers = await this.prompt(actionTypesPrompts);
         this.props = { ...this.props, ...actionTypesAnswers };
         
-        if (this.props.actionCreatorsAreNeeded) {
+        const { actionCreatorsAreNeeded } = await this.prompt(actionCreatorsAreNeededPrompt);
+
+        if (actionCreatorsAreNeeded) {
             const actionCreatorsAnswers = await this.prompt(actionCreatorsPromptsWithoutNameAsking);
-            this.props = { ...this.props, ...actionCreatorsAnswers };
+            this.props = { ...this.props, actionCreatorsAreNeeded, ...actionCreatorsAnswers };
         }
     }
 

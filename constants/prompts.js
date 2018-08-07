@@ -8,6 +8,21 @@ const componentNamePrompt = {
     default: 'App',
 };
 
+const actionNamePrompt = {
+    type: 'input',
+    name: 'actionName',
+    message: 'What\'s your action name',
+    default: 'app',
+};
+
+const containerIsNeededPrompt = 
+{
+    type: 'confirm',
+    name: 'containerIsNeeded',
+    message: 'Do you need a container?',
+    default: false,
+};
+
 const actionTypesAreNeededPrompt = {
     type: 'confirm',
     name: 'actionTypesAreNeeded',
@@ -20,13 +35,6 @@ const actionCreatorsAreNeededPrompt = {
     name: 'actionCreatorsAreNeeded',
     message: 'Do you need action creators?',
     default: false,
-};
-
-const actionNamePrompt = {
-    type: 'input',
-    name: 'actionName',
-    message: 'What\'s your action name',
-    default: 'app',
 };
 
 const actionCreatorsPromptsWithoutNameAsking = [
@@ -53,12 +61,10 @@ const actionTypesPrompts = [
         default: '',
         filter: actionCreatorsPromptFilter,
     },
-    actionCreatorsAreNeededPrompt,
 ];
 
 const containerPrompts = [
     componentNamePrompt,
-    actionTypesAreNeededPrompt,
 ];
 
 const componentPrompts = [
@@ -81,13 +87,6 @@ const componentPrompts = [
         message: 'Do you need an index.css?',
         default: true,
     },
-    {
-        type: 'confirm',
-        name: 'containerIsNeeded',
-        message: 'Do you need a container?',
-        default: false,
-    },
-    actionTypesAreNeededPrompt,
 ];
 
 module.exports = {
@@ -96,4 +95,8 @@ module.exports = {
     actionTypesPrompts,
     actionCreatorsPromptsWithNameAsking,
     actionCreatorsPromptsWithoutNameAsking,
+
+    containerIsNeededPrompt,
+    actionTypesAreNeededPrompt,
+    actionCreatorsAreNeededPrompt,
 };
