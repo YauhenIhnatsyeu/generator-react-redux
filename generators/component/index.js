@@ -17,6 +17,7 @@ const writeContainer = require('../../writers/containerWriter');
 const writeActionTypes = require('../../writers/actionTypesWriter');
 const overwriteActionTypes = require('../../overwriters/actionTypesOverwriter');
 const writeActionCreators = require('../../writers/actionCreatorsWriter');
+const overwriteActionCreators = require('../../overwriters/actionCreatorsOverwriter');
 
 module.exports = class extends Generator {
     async prompting() {
@@ -62,6 +63,7 @@ module.exports = class extends Generator {
             }
 
             writeActionCreators(this, actionCreatorsConfigValues);
+            overwriteActionCreators(this, actionCreatorsConfigValues);
         }
     }
 };
